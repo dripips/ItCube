@@ -1,0 +1,424 @@
+/* Стили для контейнера с серым фоном */
+body {
+    background-color: #f5f5f5;
+    font-family: 'Montserrat';
+}
+
+a{
+      transition: .4s;
+}
+a:hover{
+      text-decoration: none;
+      cursor: pointer;
+}
+.container {
+  max-width: 1600px;
+}
+
+/* Стили для навигации */
+.navbar {
+background-color: #ffffff;
+border-top: 1px solid #dcdcdc;
+border-bottom: 1px solid #007bff;
+}
+
+.navbar-nav {
+flex-direction: column; /* Отображать пункты вертикально */
+align-items: center; /* Центрировать по вертикали */
+width: 100%; /* Растянуть навигацию на всю ширину экрана */
+}
+
+.nav-item {
+text-align: center; /* Выравнивание текста по центру */
+width: 100%; /* Растянуть пункты на всю ширину навигации */
+}
+
+.nav-link {
+color: #333 !important;
+font-size: 16px;
+font-weight: bold;
+padding: 10px 0; /* Добавить вертикальный отступ */
+width: 100%; /* Растянуть текст на всю ширину пункта */
+}
+#navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.navbar-light .navbar-toggler {
+    color: rgba(0,0,0,.5);
+    border-color: rgb(0 0 0 / 0%);
+}
+.moblogo {
+    margin-left: 25px;
+    font-weight: bold;
+    color: #1e8bff;
+}
+.navbar-light .navbar-brand {
+       color: #1e8bff;
+}
+button.navbar-toggler.collapsed {
+    border: none !important;
+}
+
+button.navbar-toggler:focus {
+    outline: none !important;
+    border: none !important;
+}
+/* Стили для иконок */
+.active > .icon {
+   color: #007bff;
+}
+.icon {
+    color: #333;
+    font-size: 24px;
+}
+
+/* Стили для блока с преподавателями */
+.teacher-info {
+    display: none;
+}
+.teachers {
+
+ align-items: center;
+   margin-top: 20px;
+   padding: 20px;
+}
+
+.teacher {
+   display: inline-block;
+   text-align: center;
+}
+
+.teacher img {
+  max-width: 250px;
+  border-radius: 20px;
+  height: 333px;
+}
+
+.teacher-name {
+   font-weight: bold;
+   margin-top: 10px;
+}
+
+.teacher-info {
+   display: none;
+}
+/* Стили для плюса и минуса */
+.toggle-icon {
+    cursor: pointer;
+}
+
+.plus {
+    display: inline-block;
+}
+
+.minus {
+    display: none;
+}
+ /* Направления обучения */
+.directions {
+     margin-top: 20px;
+     padding: 20px;
+     border-radius: 4px;
+ }
+
+ .direction {
+     display: flex;
+     align-items: center;
+     margin-bottom: 10px;
+     padding: 10px;
+     position: relative;
+ }
+
+ .direction-icon {
+     width: 70px;
+     height: 70px;
+     margin-right: 20px;
+ }
+
+ .direction-title {
+     font-weight: bold;
+     font-size: 14px;
+     margin: 0;
+     margin-bottom: 12px;
+ }
+
+ .direction-age {
+     color: #777;
+     margin: 0;
+ }
+
+a.nav-link:hover {
+color: #007bff !important;
+}
+
+a.nav-link:hover > .icon {
+color: #007bff;
+}
+/* Стили для таблицы с расписанием */
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 20px;
+}
+
+table, th, td {
+border: 1px solid #007bff;
+}
+
+th, td {
+padding: 10px;
+text-align: center;
+vertical-align: middle;
+font-weight: bold;
+color: #007bff;
+}
+
+/* Стили для заголовков групп и времени */
+th:first-child {
+background-color: #007bff;
+color: #fff;
+}
+
+th:first-child, th:nth-child(n+2) {
+font-size: 16px;
+padding: 15px;
+}
+
+/* Стили для ячеек с данными о присутствии */
+td:nth-child(n+2) {
+background-color: #fff;
+font-size: 16px;
+}
+
+/* Стили для четных строк таблицы */
+tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+/* Стили для блока с партнерами */
+.partner {
+display: flex;
+align-items: center;
+margin-bottom: 20px;
+padding: 20px;
+border-radius: 4px;
+}
+
+.partner img {
+max-width: 100px;
+margin-right: 20px;
+}
+
+.partner-info {
+flex-grow: 1;
+}
+
+.partner-name {
+font-weight: bold;
+margin-bottom: 10px;
+}
+/* Стили для footer */
+footer {
+background-color: #111;
+color: #fff;
+padding: 20px 0;
+}
+
+footer h4 {
+font-size: 18px;
+font-weight: bold;
+}
+
+footer p {
+font-size: 16px;
+}
+
+/* Стили для социальных иконок */
+.social-icon {
+font-size: 24px;
+color: #fff;
+text-decoration: none;
+margin-right: 10px;
+}
+.bg-bbb {
+background-color: #111;
+}
+/* Стили для кнопки "наверх" */
+.back-to-top {
+position: fixed;
+bottom: 20px;
+right: 20px;
+background-color: #007bff;
+color: #fff;
+padding: 10px 20px;
+border-radius: 50px;
+text-decoration: none;
+display: none;
+cursor: pointer;
+}
+
+.back-to-top i {
+font-size: 24px;
+margin-right: 10px;
+}
+
+.back-to-top:hover {
+background-color: #0056b3;
+}
+.preloader {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background: #fff; /* Фон белый */
+         z-index: 9999;
+     }
+
+     .preloader .logo {
+         position: absolute;
+         width: 20%;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+     }
+
+     .preloader .loading {
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 4px; /* Высота полоски */
+         background: #007bff; /* Цвет полоски (голубой) */
+         z-index: 99999;
+         animation: loading 2s linear infinite; /* Анимация */
+     }
+
+     @keyframes loading {
+         0% {
+             width: 0; /* Начальная ширина полоски - 0 */
+         }
+         50% {
+             width: 100%; /* За 50% времени загрузки ширина становится 100% */
+         }
+         100% {
+             width: 0; /* Завершение загрузки, ширина снова 0 */
+         }
+     }
+     /* Стили для раздела новостей */
+   .news-title {
+       margin-bottom: 15px;
+   }
+
+   .news-container {
+     display: flex;
+     overflow-x: scroll;
+     scroll-behavior: smooth;
+     -webkit-overflow-scrolling: touch;
+     gap: 20px;
+     align-items: flex-start;
+     overflow: hidden;
+ }
+ hr {
+   overflow: visible;
+   text-align: inherit;
+   margin: 0 0 20px 0;
+   border: 0;
+   border-top: 1px solid #ededed;
+}
+   .news-item {
+       flex: 0 0 auto;
+       width: 100%;
+           word-wrap: break-word;
+       padding: 10px;
+       text-align: left; /* Выравнивание текста в новости по левому краю */
+   }
+
+   .news-item h3 {
+       font-size: 18px;
+       margin-top: 10px; /* Отступ между заголовком и текстом новости */
+   }
+
+   .news-item img {
+       max-width: 100%;
+       height: auto;
+       border: 1px solid #ddd; /* Добавим рамку для изображения */
+   }
+    .news-item .btn {
+      width: 100%;
+    }
+   /* Стили для кнопки "Читать все новости" */
+   .btn-primary {
+       background-color: transparent;
+       color: #007bff; /* Цвет текста */
+       border: 2px solid #007bff; /* Приятная синяя обводка */
+       border-radius: 0; /* Уберем скругление углов */
+       padding: 10px 20px; /* Внутренний отступ */
+       font-size: 16px;
+       transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+   }
+
+   .btn-primary:hover {
+       background-color: #007bff; /* Смена цвета при наведении */
+       color: #fff; /* Смена цвета текста при наведении */
+       border-color: #007bff; /* Смена цвета обводки при наведении */
+       text-decoration: none;
+   }
+
+   /* Иконка стрелки вправо для кнопки */
+   .btn-primary i {
+       margin-left: 5px; /* Отступ между текстом и иконкой */
+   }
+   /* Обновленные стили для стрелок */
+   .slick-prev, .slick-next {
+    display: none !important;
+}
+/* Стили для собственных кнопок Slick Slider */
+.custom-slick-prev,
+.custom-slick-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px; /* Размер иконки */
+    color: #007bff; /* Цвет кнопок */
+    cursor: pointer;
+    padding: 4px 15px;
+    border-radius: 100%;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    outline: none;
+    z-index: 1;
+}
+
+.custom-slick-prev {
+    left: 5px; /* Расположение кнопки "назад" */
+}
+
+.custom-slick-next {
+    right: 5px; /* Расположение кнопки "вперед" */
+}
+
+/* Стили для кастомного списка */
+.custom-list {
+  list-style: none; /* Убираем стандартные маркеры */
+  padding-left: 0; /* Убираем отступ слева */
+}
+
+.custom-list li {
+  display: flex; /* Делаем элементы списка блочными и выравниваем их горизонтально */
+  align-items: center; /* Выравниваем элементы по вертикали */
+  margin-bottom: 10px; /* Отступ между элементами списка */
+}
+
+.custom-list li img {
+  width: 24px; /* Задаем ширину изображения */
+  height: 24px; /* Задаем высоту изображения */
+  margin-right: 10px; /* Отступ между изображением и текстом */
+}
+
+.bold-blue-text {
+  font-weight: bold; /* Жирный текст */
+  color: #007bff; /* Синий цвет текста */
+}
