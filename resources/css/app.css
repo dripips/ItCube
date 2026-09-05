@@ -1,9 +1,208 @@
 @import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+@source '../views';
+@source '../../app';
+
+/* Тему переключает класс на <html>, а не системная настройка: человек, который
+   выбрал светлую, не должен получить тёмную на другом устройстве. */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    /* Фирменный цвет — фиолетовый, и это не вкусовщина: зелёный и красный
+       здесь заняты смыслом «тест сошёлся» и «не сошёлся», поэтому бренд
+       обязан быть третьим цветом, иначе результат проверки читается неверно. */
+    --color-brand-50: oklch(0.97 0.02 295);
+    --color-brand-100: oklch(0.94 0.04 295);
+    --color-brand-200: oklch(0.88 0.08 295);
+    --color-brand-300: oklch(0.8 0.13 293);
+    --color-brand-400: oklch(0.71 0.18 291);
+    --color-brand-500: oklch(0.62 0.22 289);
+    --color-brand-600: oklch(0.54 0.23 288);
+    --color-brand-700: oklch(0.46 0.2 288);
+    --color-brand-800: oklch(0.38 0.16 288);
+    --color-brand-900: oklch(0.3 0.12 288);
+
+    --radius-card: 1rem;
+}
+
+@layer base {
+    :root {
+        --surface: oklch(0.99 0.003 280);
+        --surface-raised: oklch(1 0 0);
+        --surface-sunken: oklch(0.96 0.006 280);
+        --line: oklch(0.9 0.008 280);
+        --ink: oklch(0.22 0.02 280);
+        --ink-muted: oklch(0.5 0.015 280);
+        --code-bg: oklch(0.16 0.02 280);
+        --code-ink: oklch(0.92 0.01 280);
+    }
+
+    .dark {
+        --surface: oklch(0.17 0.015 280);
+        --surface-raised: oklch(0.21 0.018 280);
+        --surface-sunken: oklch(0.14 0.014 280);
+        --line: oklch(0.29 0.02 280);
+        --ink: oklch(0.94 0.008 280);
+        --ink-muted: oklch(0.68 0.015 280);
+        --code-bg: oklch(0.12 0.015 280);
+        --code-ink: oklch(0.92 0.01 280);
+    }
+
+    html {
+        color-scheme: light;
+    }
+
+    html.dark {
+        color-scheme: dark;
+    }
+
+    body {
+        background-color: var(--surface);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* Кириллица в интерфейсе длиннее латиницы примерно на четверть, поэтому
+       заголовки поджаты по межбукве заранее, а не подгоняются по месту. */
+    h1,
+    h2,
+    h3 {
+        letter-spacing: -0.02em;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-brand-500);
+        outline-offset: 2px;
+    }
+}
+
+/* Базовые кирпичики объявлены как утилиты, а не как классы в @layer
+   components: в Tailwind 4 @apply принимает только утилиты, и «.btn-primary
+   { @apply btn }» с обычным классом собираться не будет. */
+@utility btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition;
+}
+
+@utility badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium;
+}
+
+@utility code {
+    font-family: var(--font-mono);
+    background-color: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: 0.75rem;
+    tab-size: 4;
+}
+
+@layer components {
+    .surface {
+        background-color: var(--surface-raised);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-card);
+    }
+
+    .muted {
+        color: var(--ink-muted);
+    }
+
+    .btn-primary {
+        @apply btn bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800;
+    }
+
+    .btn-ghost {
+        @apply btn;
+        border: 1px solid var(--line);
+        color: var(--ink);
+    }
+
+    .btn-ghost:hover {
+        background-color: var(--surface-sunken);
+    }
+
+    .btn-ghost:disabled,
+    .btn-primary:disabled {
+        @apply cursor-not-allowed opacity-50;
+    }
+
+    .field {
+        @apply w-full rounded-lg px-3 py-2 text-sm transition;
+        background-color: var(--surface);
+        border: 1px solid var(--line);
+        color: var(--ink);
+    }
+
+    .field:focus {
+        border-color: var(--color-brand-500);
+        outline: none;
+        box-shadow: 0 0 0 3px oklch(0.62 0.22 289 / 0.15);
+    }
+
+    .badge-neutral {
+        @apply badge;
+        background-color: var(--surface-sunken);
+        color: var(--ink-muted);
+    }
+
+    .badge-pass {
+        @apply badge bg-emerald-500/12 text-emerald-700 dark:text-emerald-300;
+    }
+
+    .badge-fail {
+        @apply badge bg-rose-500/12 text-rose-700 dark:text-rose-300;
+    }
+
+    .badge-brand {
+        @apply badge bg-brand-500/12 text-brand-700 dark:text-brand-300;
+    }
+
+    .prose-lesson {
+        @apply max-w-none leading-relaxed;
+    }
+
+    .prose-lesson h2 {
+        @apply mt-8 mb-3 text-xl font-semibold;
+    }
+
+    .prose-lesson h3 {
+        @apply mt-6 mb-2 text-lg font-semibold;
+    }
+
+    .prose-lesson p {
+        @apply my-3;
+    }
+
+    .prose-lesson ul {
+        @apply my-3 list-disc space-y-1 pl-6;
+    }
+
+    .prose-lesson ol {
+        @apply my-3 list-decimal space-y-1 pl-6;
+    }
+
+    .prose-lesson pre {
+        @apply code my-4 overflow-x-auto p-4 text-sm;
+    }
+
+    .prose-lesson :not(pre) > code {
+        font-family: var(--font-mono);
+        background-color: var(--surface-sunken);
+        border-radius: 0.3rem;
+        padding: 0.1rem 0.35rem;
+        font-size: 0.9em;
+    }
+}
+
+/* Редактор кода: подсветки нет намеренно — она требует библиотеки и на
+   школьных задачах в двадцать строк даёт меньше, чем стоит. Зато номера строк
+   и табуляция на четыре пробела ведут себя предсказуемо. */
+.editor {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    tab-size: 4;
 }

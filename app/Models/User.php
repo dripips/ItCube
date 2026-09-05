@@ -95,6 +95,28 @@ class User extends Authenticatable
         return $this->hasMany(Attendance::class);
     }
 
+    /** @return HasMany<AssessmentAttempt, $this> */
+    public function assessmentAttempts(): HasMany
+    {
+        return $this->hasMany(AssessmentAttempt::class);
+    }
+
+    /**
+     * Занятие доступно, если ученик числится хотя бы в одной группе того
+     * направления, к которому занятие относится. Проверка идёт по группам, а не
+     * по направлению напрямую: отчисленный из группы теряет доступ вместе с ней.
+     */
+    public function canSee(Lesson $lesson): bool
+    {
+        if ($this->isTeacher()) {
+            return true;
+        }
+
+        return $this->groups()
+            ->where('direction_id', $lesson->subject->direction_id)
+            ->exists();
+    }
+
     /** @return HasMany<File, $this> */
     public function files(): HasMany
     {

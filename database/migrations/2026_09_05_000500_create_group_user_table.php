@@ -8,14 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('group_student', function (Blueprint $table) {
+        Schema::create('group_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('group_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->date('joined_on')->nullable();
             $table->date('left_on')->nullable();
             $table->timestamps();
-            // Ученик ходит на несколько направлений сразу. В схеме 2023 года у
+            // Таблица названа по соглашению Laravel, а смысл «ученик» живёт в имени
+            // связи students(). Ученик ходит на несколько направлений сразу. В схеме 2023 года у
             // него было одно поле group_id, и второе направление было не записать.
             $table->unique(['group_id', 'user_id']);
         });
@@ -23,6 +24,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('group_student');
+        Schema::dropIfExists('group_user');
     }
 };

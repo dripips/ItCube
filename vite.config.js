@@ -9,9 +9,10 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
             fonts: [
-                bunny('Instrument Sans', {
-                    weights: [400, 500, 600],
-                }),
+                // Кириллица обязательна: Instrument Sans из заготовки её не
+                // покрывает, а платформа русскоязычная.
+                bunny('Inter', { weights: [400, 500, 600, 700], subsets: ['latin', 'cyrillic'] }),
+                bunny('JetBrains Mono', { weights: [400, 500], subsets: ['latin', 'cyrillic'] }),
             ],
         }),
         tailwindcss(),

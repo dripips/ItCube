@@ -12,20 +12,43 @@ use App\Models\User;
  * Проверка работы ученика по набору тест-кейсов.
  *
  * Кейсы уходят на площадку одной пачкой и параллельно: каждому нужен свой
- * stdin, а сборка занимает секунды, и последовательный прогон превратил бы
- * контрольную в ожидание. Первый провал проверку не останавливает — ученик
- * должен увидеть, сколько кейсов не сошлось, а не только самый первый.
+ * stdin, а сборка занимает секунды. Первый провал проверку не останавливает —
+ * ученик должен увидеть, сколько кейсов не сошлось, а не только самый первый.
+ *
+ * Работа сначала записывается со статусом «проверяется», и только потом
+ * заполняется. Так сделано не для красоты: замер показал, что пять кейсов на Go
+ * занимают около минуты, и держать всё это время открытый запрос нельзя.
  */
 final class AssignmentGrader
 {
     public function __construct(private readonly CodeRunner $runner) {}
 
+    /** Записать работу в очередь на проверку, ничего пока не запуская. */
+    public function accept(Assignment $assignment, User $student, string $code): Submission
+    {
+        return $student->submissions()->create([
+            'assignment_id' => $assignment->id,
+            'code' => $code,
+            'status' => SubmissionStatus::Pending,
+            'total_count' => $assignment->tests()->count(),
+            'attempt_number' => $assignment->submissions()->where('user_id', $student->id)->count() + 1,
+        ]);
+    }
+
+    /** Принять и сразу проверить — так работают тесты и консольные команды. */
     public function grade(Assignment $assignment, User $student, string $code): Submission
     {
+        return $this->fill($this->accept($assignment, $student, $code));
+    }
+
+    /** Прогнать кейсы и заполнить уже записанную работу. */
+    public function fill(Submission $submission): Submission
+    {
+        $assignment = $submission->assignment;
         $tests = $assignment->tests()->get();
 
         $results = $this->runner->runMany(
-            $code,
+            $submission->code,
             $assignment->language,
             $tests->map(fn (AssignmentTest $test): string => (string) $test->stdin)->values()->all(),
         );
@@ -70,18 +93,17 @@ final class AssignmentGrader
             default => SubmissionStatus::Failed,
         };
 
-        return $student->submissions()->create([
-            'assignment_id' => $assignment->id,
-            'code' => $code,
+        $submission->update([
             'status' => $status,
             'output' => $blockedReason ?? $firstFailure ?? __('Все тесты пройдены'),
             'test_results' => $rows,
             'passed_count' => $passed,
             'total_count' => $total,
             'score' => $blockedReason !== null ? 0 : $score,
-            'attempt_number' => $assignment->submissions()->where('user_id', $student->id)->count() + 1,
             'runtime_ms' => $runtime,
         ]);
+
+        return $submission->refresh();
     }
 
     /**
