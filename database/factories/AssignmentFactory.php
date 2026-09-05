@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Assignment;
 use App\Enums\Difficulty;
+use App\Models\Assignment;
 use App\Models\Lesson;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

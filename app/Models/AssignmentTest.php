@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\AssignmentTestFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AssignmentTest extends Model
 {
-    /** @use HasFactory<\Database\Factories\AssignmentTestFactory> */
+    /** @use HasFactory<AssignmentTestFactory> */
     use HasFactory;
 
     /** @var list<string> */

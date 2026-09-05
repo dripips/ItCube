@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Enums\SubmissionStatus;
+use Database\Factories\SubmissionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Submission extends Model
 {
-    /** @use HasFactory<\Database\Factories\SubmissionFactory> */
+    /** @use HasFactory<SubmissionFactory> */
     use HasFactory;
 
     /** @var list<string> */
@@ -31,7 +33,7 @@ class Submission extends Model
     {
         return [
             'test_results' => 'array',
-            'status' => \App\Enums\SubmissionStatus::class,
+            'status' => SubmissionStatus::class,
         ];
     }
 
@@ -47,6 +49,6 @@ class Submission extends Model
 
     public function passed(): bool
     {
-        return $this->status === \App\Enums\SubmissionStatus::Passed;
+        return $this->status === SubmissionStatus::Passed;
     }
 }

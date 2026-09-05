@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\AssignmentTest;
 use App\Models\Assignment;
+use App\Models\AssignmentTest;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

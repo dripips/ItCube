@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Enums\AttendanceStatus;
+use Database\Factories\AttendanceFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Attendance extends Model
 {
-    /** @use HasFactory<\Database\Factories\AttendanceFactory> */
+    /** @use HasFactory<AttendanceFactory> */
     use HasFactory;
 
     /** @var list<string> */
@@ -26,7 +28,7 @@ class Attendance extends Model
     {
         return [
             'held_on' => 'date',
-            'status' => \App\Enums\AttendanceStatus::class,
+            'status' => AttendanceStatus::class,
         ];
     }
 

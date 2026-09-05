@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\AssessmentItemFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class AssessmentItem extends Model
 {
-    /** @use HasFactory<\Database\Factories\AssessmentItemFactory> */
+    /** @use HasFactory<AssessmentItemFactory> */
     use HasFactory;
 
     /** @var list<string> */

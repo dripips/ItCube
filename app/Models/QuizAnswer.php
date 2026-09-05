@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\QuizAnswerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class QuizAnswer extends Model
 {
-    /** @use HasFactory<\Database\Factories\QuizAnswerFactory> */
+    /** @use HasFactory<QuizAnswerFactory> */
     use HasFactory;
 
     /** @var list<string> */
