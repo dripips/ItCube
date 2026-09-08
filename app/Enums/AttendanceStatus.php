@@ -9,12 +9,16 @@ enum AttendanceStatus: string
     case Late = 'late';
     case Excused = 'excused';
 
+    /**
+     * Подписи назывные, а не глагольные: «Был» в карточке девочки — ошибка,
+     * а рода у отметки в журнале нет и быть не может.
+     */
     public function label(): string
     {
         return match ($this) {
-            self::Present => __('Был'),
-            self::Absent => __('Не был'),
-            self::Late => __('Опоздал'),
+            self::Present => __('На занятии'),
+            self::Absent => __('Пропуск'),
+            self::Late => __('Опоздание'),
             self::Excused => __('По уважительной'),
         };
     }

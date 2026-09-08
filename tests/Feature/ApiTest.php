@@ -264,7 +264,7 @@ class ApiTest extends TestCase
         $en = $this->withHeader('Accept-Language', 'en')
             ->getJson(route('api.journal.show', ['group' => 'python-1']))->json('statuses.0.label');
 
-        $this->assertSame('Был', $ru);
+        $this->assertSame('На занятии', $ru);
         $this->assertSame('Present', $en);
     }
 
