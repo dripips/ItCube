@@ -5,7 +5,7 @@ register — and coding tasks that check themselves.
 
 Русский: [README.ru.md](README.ru.md)
 
-![Задача с проверкой по наборам данных](docs/screenshots/01-assignment.png)
+![A task graded against sets of data](docs/screenshots/en/01-assignment.png)
 
 The first version was written in 2023: procedural PHP, two separate login
 flows, attendance stored as a pair of student and date with no group, and file
@@ -70,10 +70,15 @@ dictionaries against the code, and a test keeps them from drifting apart.
 
 | | |
 |---|---|
-| ![Панель управления](docs/screenshots/10-admin.png) The dashboard | ![Кабинет родителя](docs/screenshots/12-child.png) A parent's view of one child |
-| ![Журнал посещаемости](docs/screenshots/02-journal.png) Attendance register | ![Ведомость](docs/screenshots/06-sheet.png) Assessment sheet |
-| ![Тест с таймером](docs/screenshots/03-quiz.png) Quiz with a timer | ![Занятие](docs/screenshots/04-lesson.png) A lesson |
-| ![Люди](docs/screenshots/13-people.png) People and roles | ![Тёмная тема](docs/screenshots/10-admin-dark.png) Dark theme |
+| ![The dashboard](docs/screenshots/en/10-admin.png) The dashboard | ![A parent's view](docs/screenshots/en/12-child.png) A parent's view of one child |
+| ![Attendance register](docs/screenshots/en/02-journal.png) Attendance register | ![Assessment sheet](docs/screenshots/en/06-sheet.png) Assessment sheet |
+| ![Quiz with a timer](docs/screenshots/en/03-quiz.png) Quiz with a timer | ![A lesson](docs/screenshots/en/04-lesson.png) A lesson |
+| ![People](docs/screenshots/en/13-people.png) People and roles | ![Dark theme](docs/screenshots/en/10-admin-dark.png) Dark theme |
+
+The interface is shown in English here; the Russian one is in
+[README.ru.md](README.ru.md). Group names, lesson titles and task text stay in
+Russian in both, because they are one school's own content rather than interface
+strings.
 
 ## Running it
 
