@@ -42,8 +42,23 @@ out, and **assessments** that combine quizzes and coding tasks into one graded
 paper with an open window.
 
 **An attendance register** that records the group, so a student enrolled in two
-tracks is no longer indistinguishable on the same day — the 2023 schema could
+tracks is no longer indistinguishable on the same day. The 2023 schema could
 not tell those apart.
+
+**A dashboard that answers questions rather than counting things.** The table
+that matters lists tasks by the share of students who solved them, lowest
+first: it points at the topic worth explaining again, which no activity counter
+ever does. Beside it: attendance by week and by group, submissions per day, the
+quiz questions people get wrong most often, and which languages get used. It is
+computed with grouped queries, and the charts are drawn in markup, because two
+charts do not justify a charting library.
+
+**A parent's view.** An adult linked to a student sees attendance, results,
+the timetable and assessments. They do not see their child's code, on purpose:
+the questions a parent has are whether the child turns up and whether they are
+keeping up, and going through a solution is the teacher's job. The link is
+many-to-many, because a child can have two adults and an adult two children in
+different groups.
 
 **Three languages.** Russian, English and German, in the gettext style: the
 translation key is the source string itself, so anything untranslated stays
@@ -55,9 +70,10 @@ dictionaries against the code, and a test keeps them from drifting apart.
 
 | | |
 |---|---|
+| ![Панель управления](docs/screenshots/10-admin.png) The dashboard | ![Кабинет родителя](docs/screenshots/12-child.png) A parent's view of one child |
 | ![Журнал посещаемости](docs/screenshots/02-journal.png) Attendance register | ![Ведомость](docs/screenshots/06-sheet.png) Assessment sheet |
 | ![Тест с таймером](docs/screenshots/03-quiz.png) Quiz with a timer | ![Занятие](docs/screenshots/04-lesson.png) A lesson |
-| ![Моё обучение](docs/screenshots/05-learn.png) Student's home | ![Тёмная тема](docs/screenshots/01-assignment-dark.png) Dark theme |
+| ![Люди](docs/screenshots/13-people.png) People and roles | ![Тёмная тема](docs/screenshots/10-admin-dark.png) Dark theme |
 
 ## Running it
 
@@ -77,8 +93,9 @@ php artisan serve
 
 The seed builds a demo school: four tracks, five groups, eighteen students,
 lessons with real tasks, a quiz, an assessment and a month of attendance.
-Everyone's password is `password`; sign in as `lebedeva` for the teacher's
-side or `artem` for a student's.
+Everyone's password is `password`. Sign in as `admin` for the dashboard,
+`lebedeva` for the teacher's side, `artem` for a student's, or `belova` for a
+parent with two children in different groups.
 
 Grading runs on a queue, so start a worker too:
 
@@ -95,13 +112,13 @@ without registration.
 php artisan test
 ```
 
-Fifty-one tests. None of them touch the network: HTTP is faked, so the suite
+Sixty-eight tests. None of them touch the network: HTTP is faked, so the suite
 does not depend on somebody else's uptime.
 
 ## What is not here
 
-No file manager yet, and no admin screens for creating tracks and groups —
-those are seeded or written by hand for now.
+No file manager yet. Tracks and subjects are still seeded rather than edited
+in the panel; people, groups and timetables are editable there.
 
 The blocklists in `CodeRunner` are politeness, not isolation. They stop the
 obvious nonsense before the network request so that a student gets a clear
