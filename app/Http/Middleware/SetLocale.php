@@ -17,7 +17,9 @@ class SetLocale
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = $request->session()->get('locale');
+        // У запроса из приложения сессии нет вовсе: обращение к ней без
+        // проверки роняет каждый запрос к API.
+        $locale = $request->hasSession() ? $request->session()->get('locale') : null;
 
         if (! Locales::supports($locale)) {
             $locale = $request->user()?->locale;
