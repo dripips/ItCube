@@ -55,6 +55,7 @@ class DemoSeeder extends Seeder
         $this->algoCourse($directions['algo'], $teachers['python']);
 
         $this->attendance($groups);
+        $this->guardians($students);
         $this->news($admin, $teachers['python']);
     }
 
@@ -415,15 +416,15 @@ class DemoSeeder extends Seeder
                 1 => 1.0,
                 2 => 0.6,
                 default => 0.0,
-            });
+            }, 12 - $index % 7);
 
             if ($index % 3 !== 2) {
-                $this->fakeSubmission($even, $student, $index % 2 === 0 ? 1.0 : 0.75);
+                $this->fakeSubmission($even, $student, $index % 2 === 0 ? 1.0 : 0.75, 5 - $index % 5);
             }
         }
     }
 
-    private function fakeSubmission(Assignment $assignment, User $student, float $share): void
+    private function fakeSubmission(Assignment $assignment, User $student, float $share, int $daysAgo = 0): void
     {
         $tests = $assignment->tests()->get();
         $passCount = (int) round($tests->count() * $share);
@@ -469,6 +470,10 @@ class DemoSeeder extends Seeder
                 'total_count' => $tests->count(),
                 'score' => $score,
                 'runtime_ms' => random_int(8000, 16000),
+                // Даты разнесены по дням: иначе график сдач за две недели
+                // превращается в одну свечу и ничего не показывает.
+                'created_at' => now()->subDays($daysAgo)->setTime(random_int(15, 20), random_int(0, 59)),
+                'updated_at' => now()->subDays($daysAgo),
             ],
         );
     }
@@ -558,6 +563,37 @@ class DemoSeeder extends Seeder
             6 => AttendanceStatus::Excused,
             default => AttendanceStatus::Present,
         };
+    }
+
+    /**
+     * Взрослые, закреплённые за учениками.
+     *
+     * У одного двое детей, у другого ребёнок один, а у третьего ребёнка двое
+     * взрослых: связь многие-ко-многим заведена именно ради этих случаев, и
+     * в демонстрационных данных они должны встречаться, иначе её никто не
+     * проверит.
+     *
+     * @param  array<int, User>  $students
+     */
+    private function guardians(array $students): void
+    {
+        $rows = [
+            ['belova', 'Ирина', 'Белова', 'мать', [0, 5]],
+            ['volkov', 'Сергей', 'Волков', 'отец', [1]],
+            ['guseva', 'Наталья', 'Гусева', 'мать', [2]],
+            ['danilov', 'Пётр', 'Данилов', 'отец', [3]],
+            ['danilova', 'Ольга', 'Данилова', 'мать', [3]],
+        ];
+
+        foreach ($rows as [$username, $first, $last, $relation, $indexes]) {
+            $guardian = $this->person($username, $first, $last, Role::Guardian);
+
+            $guardian->children()->syncWithoutDetaching(
+                collect($indexes)
+                    ->mapWithKeys(fn (int $i): array => [$students[$i]->id => ['relation' => $relation]])
+                    ->all()
+            );
+        }
     }
 
     private function news(User $admin, User $teacher): void

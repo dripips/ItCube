@@ -117,6 +117,34 @@ class User extends Authenticatable
             ->exists();
     }
 
+    /**
+     * Дети, за которыми закреплён взрослый.
+     *
+     * Связь многие-ко-многим: у ребёнка бывает двое взрослых, у взрослого —
+     * двое детей в разных группах.
+     *
+     * @return BelongsToMany<User, $this>
+     */
+    public function children(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'guardian_student', 'guardian_id', 'student_id')
+            ->withPivot('relation')
+            ->withTimestamps();
+    }
+
+    /** @return BelongsToMany<User, $this> */
+    public function guardians(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'guardian_student', 'student_id', 'guardian_id')
+            ->withPivot('relation')
+            ->withTimestamps();
+    }
+
+    public function isGuardian(): bool
+    {
+        return $this->role === Role::Guardian;
+    }
+
     /** @return HasMany<File, $this> */
     public function files(): HasMany
     {

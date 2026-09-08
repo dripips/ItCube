@@ -25,7 +25,14 @@
 
         <nav class="hidden items-center gap-1 text-sm md:flex">
             @auth
-                @if (auth()->user()->isTeacher())
+                @if (auth()->user()->isAdmin())
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">{{ __('Панель') }}</x-nav-link>
+                    <x-nav-link :href="route('admin.people.index')" :active="request()->routeIs('admin.people.*')">{{ __('Люди') }}</x-nav-link>
+                    <x-nav-link :href="route('admin.groups.index')" :active="request()->routeIs('admin.groups.*')">{{ __('Группы') }}</x-nav-link>
+                    <x-nav-link :href="route('teach.journal.index')" :active="request()->routeIs('teach.journal.*')">{{ __('Журнал') }}</x-nav-link>
+                @elseif (auth()->user()->isGuardian())
+                    <x-nav-link :href="route('family.index')" :active="request()->routeIs('family.*')">{{ __('Мои дети') }}</x-nav-link>
+                @elseif (auth()->user()->isTeacher())
                     <x-nav-link :href="route('teach.groups.index')" :active="request()->routeIs('teach.groups.*')">{{ __('Группы') }}</x-nav-link>
                     <x-nav-link :href="route('teach.journal.index')" :active="request()->routeIs('teach.journal.*')">{{ __('Журнал') }}</x-nav-link>
                     <x-nav-link :href="route('teach.assessments.index')" :active="request()->routeIs('teach.assessments.*')">{{ __('Контрольные') }}</x-nav-link>

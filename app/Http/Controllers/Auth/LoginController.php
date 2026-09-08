@@ -35,9 +35,14 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(
-            $request->user()->isTeacher() ? route('teach.groups.index') : route('learn.index')
-        );
+        $user = $request->user();
+
+        return redirect()->intended(match (true) {
+            $user->isAdmin() => route('admin.dashboard'),
+            $user->isTeacher() => route('teach.groups.index'),
+            $user->isGuardian() => route('family.index'),
+            default => route('learn.index'),
+        });
     }
 
     public function destroy(Request $request): RedirectResponse

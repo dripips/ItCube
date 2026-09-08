@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DirectionController;
+use App\Http\Controllers\Family;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Learn;
 use App\Http\Controllers\LocaleController;
@@ -54,4 +56,25 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teach')->name('teach.')->gr
 
     Route::get('assessments', [Teach\AssessmentController::class, 'index'])->name('assessments.index');
     Route::get('assessments/{assessment}', [Teach\AssessmentController::class, 'show'])->name('assessments.show');
+});
+
+Route::middleware(['auth', 'role:guardian'])->prefix('family')->name('family.')->group(function (): void {
+    Route::get('/', [Family\DashboardController::class, 'index'])->name('index');
+    Route::get('children/{child}', [Family\DashboardController::class, 'show'])->name('children.show');
+});
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function (): void {
+    Route::get('/', Admin\DashboardController::class)->name('dashboard');
+
+    Route::get('people', [Admin\PersonController::class, 'index'])->name('people.index');
+    Route::get('people/create', [Admin\PersonController::class, 'create'])->name('people.create');
+    Route::post('people', [Admin\PersonController::class, 'store'])->name('people.store');
+    Route::get('people/{person}/edit', [Admin\PersonController::class, 'edit'])->name('people.edit');
+    Route::patch('people/{person}', [Admin\PersonController::class, 'update'])->name('people.update');
+
+    Route::get('groups', [Admin\GroupController::class, 'index'])->name('groups.index');
+    Route::get('groups/create', [Admin\GroupController::class, 'create'])->name('groups.create');
+    Route::post('groups', [Admin\GroupController::class, 'store'])->name('groups.store');
+    Route::get('groups/{group}/edit', [Admin\GroupController::class, 'edit'])->name('groups.edit');
+    Route::patch('groups/{group}', [Admin\GroupController::class, 'update'])->name('groups.update');
 });
