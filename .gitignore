@@ -25,3 +25,6 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Черновики постов живут в c:/rubby/posts, к продукту не относятся
+post/
